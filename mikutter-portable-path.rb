@@ -79,7 +79,11 @@ Plugin.create(:"mikutter-portable-path") {
     def run(*args)
       result = run_org(*args)
 
-      @_filename = port_path(self.filename_org.gsub(/\\/, "/"))
+      @_filename = if result == Gtk::Dialog::RESPONSE_ACCEPT
+        port_path(self.filename_org.gsub(/\\/, "/"))
+      else
+        self.filename_org
+      end
 
       result 
     end
